@@ -13,6 +13,7 @@ export declare class Pagination {
     private executeFilter();
     executeGetNumOfPage(callback?: Function): Promise<void>;
     private executeData();
+    makePageList(): void;
     getPage(page: number): Promise<any>;
     nextPage(): Promise<any>;
     prevPage(): Promise<any>;

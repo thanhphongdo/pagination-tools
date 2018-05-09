@@ -55,7 +55,7 @@ export class Pagination {
         return this.config.getNumOfPageFunc().then((count: number) => {
             self.config.numOfRecord = count;
             self.config.numOfPage = Math.ceil(count / self.config.perPage);
-            // self.makePageList();
+            self.makePageList();
             if (callback) callback();
         }).catch((err: any) => {
             console.log(err);
@@ -114,6 +114,43 @@ export class Pagination {
     //     }
     // }
 
+    public makePageList() {
+        if (this.config.enableMaxPageMode) {
+            let pageList: Array<number> = [];
+            for (let i = this.config.page - (Math.ceil(this.config.maxPageInPagination / 2) - 1); i <= this.config.page + (Math.ceil(this.config.maxPageInPagination / 2) - this.config.maxPageInPagination % 2); i++) {
+                if (i >= 1 && i <= this.config.numOfPage) {
+                    pageList.push(i);
+                }
+            }
+            if (pageList.length < this.config.maxPageInPagination) {
+                let fromPage = 0, toPage = 0;
+                if (pageList[0] == 1) {
+                    fromPage = pageList[pageList.length - 1] + 1;
+                    toPage = pageList[pageList.length - 1] + (this.config.maxPageInPagination - pageList.length);
+                    for (let i = fromPage; i <= toPage; i++) {
+                        if (i >= 1 && i <= this.config.numOfPage && pageList.length < this.config.maxPageInPagination) {
+                            pageList.push(i);
+                        }
+                    }
+                } else if (pageList[pageList.length - 1] == this.config.numOfPage) {
+                    toPage = pageList[0] - 1;
+                    fromPage = pageList[0] - (this.config.maxPageInPagination - pageList.length);
+                    for (let i = toPage; i >= fromPage; i--) {
+                        if (i >= 1 && i <= this.config.numOfPage && pageList.length < this.config.maxPageInPagination) {
+                            pageList.unshift(i);
+                        }
+                    }
+                }
+            }
+            this.pageList = pageList;
+        } else {
+            this.pageList = [];
+            for (let i = 0; i < this.config.numOfPage; i++) {
+                this.pageList.push(i + 1);
+            }
+        }
+    }
+
     public getPage(page: number) {
         var self = this;
         if (this.config.loading) return Promise.resolve(null);
@@ -121,7 +158,7 @@ export class Pagination {
         if (this.config.enableLoading) this.config.loading = true;
         return this.executeData().then((res: any) => {
             self.config.loading = false;
-            // self.makePageList();
+            self.makePageList();
             if (self.config.mapDataFunc) {
                 return self.config.mapDataFunc(res);
             } else {
@@ -140,7 +177,7 @@ export class Pagination {
         if (this.config.enableLoading) this.config.loading = true;
         return this.executeData().then((res: any) => {
             self.config.loading = false;
-            // self.makePageList();
+            self.makePageList();
             if (self.config.mapDataFunc) {
                 return self.config.mapDataFunc(res);
             } else {
@@ -159,7 +196,7 @@ export class Pagination {
         if (this.config.enableLoading) this.config.loading = true;
         return this.executeData().then((res: any) => {
             self.config.loading = false;
-            // self.makePageList();
+            self.makePageList();
             if (self.config.mapDataFunc) {
                 return self.config.mapDataFunc(res);
             } else {
@@ -181,7 +218,7 @@ export class Pagination {
         if (this.config.enableLoading) this.config.loading = true;
         return this.executeData().then((res: any) => {
             self.config.loading = false;
-            // self.makePageList();
+            self.makePageList();
             if (self.config.mapDataFunc) {
                 return self.config.mapDataFunc(res);
             } else {
@@ -200,7 +237,7 @@ export class Pagination {
         if (this.config.enableLoading) this.config.loading = true;
         return this.executeData().then((res: any) => {
             self.config.loading = false;
-            // self.makePageList();
+            self.makePageList();
             if (self.config.mapDataFunc) {
                 return self.config.mapDataFunc(res);
             } else {

@@ -7,7 +7,7 @@ export interface PaginationFuncInterface {
     (page: number, perPage: number): Promise<any>;
 }
 export interface GetNumOfPageFuncInterface {
-    (): Promise<any>;
+    (): Promise<number>;
 }
 export interface MapDataFuncInterface {
     (data: any): Promise<any>;

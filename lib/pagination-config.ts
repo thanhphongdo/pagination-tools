@@ -9,7 +9,7 @@ export interface PaginationFuncInterface {
 }
 
 export interface GetNumOfPageFuncInterface {
-    (): Promise<any>;
+    (): Promise<number>;
 }
 
 export interface MapDataFuncInterface {
