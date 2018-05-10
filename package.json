@@ -1,6 +1,6 @@
 {
   "name": "pagination-tools",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Paginatio module support client and server",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
